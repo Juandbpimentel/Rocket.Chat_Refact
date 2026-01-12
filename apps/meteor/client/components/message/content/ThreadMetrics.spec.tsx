@@ -62,8 +62,15 @@ describe('Thread Metrics', () => {
 	describe('Main component', () => {
 		it('should render large followed with 3 participants and unread', async () => {
 			const navigateSpy = jest.fn();
-			const navigateCallback = (route: any) => {
-				navigateSpy(route.name, route.params.rid, route.params.tab, route.params.context);
+			const navigateCallback = (route: To | number) => {
+				if (typeof route === 'number') {
+					return;
+				}
+				if (typeof route === 'object' && 'name' in route && 'params' in route) {
+					const { name } = route as { name: string };
+					const { params } = route as { params?: { rid?: string; tab?: string; context?: string } };
+					navigateSpy(name, params?.rid, params?.tab, params?.context);
+				}
 			};
 
 			render(
@@ -118,8 +125,15 @@ describe('Thread Metrics', () => {
 
 		it('should render small not followed with 3 participants and unread', async () => {
 			const navigateSpy = jest.fn();
-			const navigateCallback = (route: any) => {
-				navigateSpy(route.name, route.params.rid, route.params.tab, route.params.context);
+			const navigateCallback = (route: To | number) => {
+				if (typeof route === 'number') {
+					return;
+				}
+				if (typeof route === 'object' && 'name' in route && 'params' in route) {
+					const { name } = route as { name: string };
+					const { params } = route as { params?: { rid?: string; tab?: string; context?: string } };
+					navigateSpy(name, params?.rid, params?.tab, params?.context);
+				}
 			};
 			inlineSize = 200;
 
