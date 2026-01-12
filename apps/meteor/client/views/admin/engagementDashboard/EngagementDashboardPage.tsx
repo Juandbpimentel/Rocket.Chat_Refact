@@ -8,15 +8,19 @@ import ChannelsTab from './channels/ChannelsTab';
 import MessagesTab from './messages/MessagesTab';
 import UsersTab from './users/UsersTab';
 
+type Tab = 'users' | 'messages' | 'channels';
+
+type Timezone = 'utc' | 'local';
+
 type EngagementDashboardPageProps = {
-	tab: 'users' | 'messages' | 'channels';
-	onSelectTab?: (tab: 'users' | 'messages' | 'channels') => void;
+	tab: Tab;
+	onSelectTab?: (tab: Tab) => void;
 };
 
 const EngagementDashboardPage = ({ tab = 'users', onSelectTab }: EngagementDashboardPageProps): ReactElement => {
 	const { t } = useTranslation();
 
-	const timezoneOptions = useMemo<[timezone: 'utc' | 'local', label: string][]>(
+	const timezoneOptions = useMemo<[Timezone, label: string][]>(
 		() => [
 			['utc', t('UTC_Timezone')],
 			['local', t('Local_Timezone')],
@@ -24,11 +28,12 @@ const EngagementDashboardPage = ({ tab = 'users', onSelectTab }: EngagementDashb
 		[t],
 	);
 
-	const [timezoneId, setTimezoneId] = useState<'utc' | 'local'>('utc');
-	const handleTimezoneChange = (timezoneId: string): void => setTimezoneId(timezoneId as 'utc' | 'local');
+	const [timezoneId, setTimezoneId] = useState<Timezone>('utc');
+	const handleTimezoneChange = (timezone: Timezone): void => setTimezoneId(timezone);
 
+	// Simplify click handlers by returning an inline callback or undefined
 	const handleTabClick = useCallback(
-		(tab: 'users' | 'messages' | 'channels'): undefined | (() => void) => (onSelectTab ? (): void => onSelectTab(tab) : undefined),
+		(tab: Tab): undefined | (() => void) => (onSelectTab ? (): void => onSelectTab(tab) : undefined),
 		[onSelectTab],
 	);
 
@@ -38,7 +43,7 @@ const EngagementDashboardPage = ({ tab = 'users', onSelectTab }: EngagementDashb
 				<Select
 					options={timezoneOptions}
 					value={timezoneId}
-					onChange={(value) => handleTimezoneChange(String(value))}
+					onChange={(value) => handleTimezoneChange(String(value) as Timezone)}
 					aria-label={t('Default_Timezone_For_Reporting')}
 				/>
 			</PageHeader>
@@ -55,9 +60,14 @@ const EngagementDashboardPage = ({ tab = 'users', onSelectTab }: EngagementDashb
 			</Tabs>
 			<PageScrollableContent padding={0}>
 				<Box m={24}>
-					{(tab === 'users' && <UsersTab timezone={timezoneId} />) ||
-						(tab === 'messages' && <MessagesTab timezone={timezoneId} />) ||
-						(tab === 'channels' && <ChannelsTab />)}
+					{/* Use a discriminated union mapping to render the proper tab content */}
+					{
+						{
+							users: <UsersTab timezone={timezoneId} />,
+							messages: <MessagesTab timezone={timezoneId} />,
+							channels: <ChannelsTab />,
+						}[tab]
+					}
 				</Box>
 			</PageScrollableContent>
 		</Page>

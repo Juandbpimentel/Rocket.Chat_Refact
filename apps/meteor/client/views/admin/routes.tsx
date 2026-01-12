@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { createRouteGroup } from '../../lib/createRouteGroup';
 
 declare module '@rocket.chat/ui-contexts' {
+	type AdminOAuthContext = 'new' | 'edit';
 	interface IRouterPaths {
 		'admin-index': {
 			pathname: '/admin';
@@ -41,7 +42,7 @@ declare module '@rocket.chat/ui-contexts' {
 			pattern: '/admin/mailer';
 		};
 		'admin-oauth-apps': {
-			pathname: `/admin/third-party-login${`/${'new' | 'edit'}` | ''}${`/${string}` | ''}`;
+			pathname: `/admin/third-party-login${`/${AdminOAuthContext}` | ''}${`/${string}` | ''}`;
 			pattern: '/admin/third-party-login/:context?/:id?';
 		};
 		'admin-integrations': {

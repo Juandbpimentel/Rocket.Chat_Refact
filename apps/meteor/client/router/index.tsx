@@ -248,17 +248,17 @@ export class Router implements RouterContextValue {
 			return to;
 		}
 
-		if ('pathname' in to) {
+		if (typeof to !== 'string' && 'pathname' in to) {
 			const { pathname, search = {} } = to;
 			return (pathname + this.encodeSearchParameters(search)) as LocationPathname | `${LocationPathname}?${LocationSearch}`;
 		}
 
-		if ('pattern' in to) {
+		if (typeof to !== 'string' && 'pattern' in to) {
 			const { pattern, params = {}, search = {} } = to;
 			return this.encodePath(pattern, params, search) as LocationPathname | `${LocationPathname}?${LocationSearch}`;
 		}
 
-		if ('name' in to) {
+		if (typeof to !== 'string' && 'name' in to) {
 			const { name, params = {}, search = {} } = to;
 			return this.encodePath(name, params, search) as LocationPathname | `${LocationPathname}?${LocationSearch}`;
 		}

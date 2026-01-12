@@ -25,12 +25,16 @@ import { useQuery } from '../hooks/useQuery';
 const AgentsTable = () => {
 	const { t } = useTranslation();
 
-	const { sortBy, sortDirection, setSort } = useSort<'name' | 'username' | 'emails.address' | 'statusLivechat'>('name');
+	type SortKey = 'name' | 'username' | 'emails.address' | 'statusLivechat';
+
+	type SortDirection = 'asc' | 'desc';
+
+	const { sortBy, sortDirection, setSort } = useSort<SortKey>('name');
 	const [text, setText] = useState('');
 	const debouncedSort = useDebouncedValue(
 		useMemo(() => [sortBy, sortDirection], [sortBy, sortDirection]),
 		500,
-	) as ['name' | 'username' | 'emails.address' | 'statusLivechat', 'asc' | 'desc'];
+	) as [SortKey, SortDirection];
 
 	const { current, itemsPerPage, setItemsPerPage, setCurrent, ...paginationProps } = usePagination();
 
@@ -40,7 +44,7 @@ const AgentsTable = () => {
 	const [defaultQuery] = useState(hashKey([query]));
 	const queryHasChanged = defaultQuery !== hashKey([query]);
 
-	const onHeaderClick = useEffectEvent((id: 'name' | 'username' | 'emails.address' | 'statusLivechat') => {
+	const onHeaderClick = useEffectEvent((id: SortKey) => {
 		if (sortBy === id) {
 			setSort(id, sortDirection === 'asc' ? 'desc' : 'asc');
 			return;
