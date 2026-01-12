@@ -1,4 +1,4 @@
-import type { To, SearchParameters, LocationPathname, LocationSearch } from '@rocket.chat/ui-contexts';
+import type { To, SearchParameters, LocationPathname, LocationSearch, RouteParameters, RouteName } from '@rocket.chat/ui-contexts';
 import { RouterContext } from '@rocket.chat/ui-contexts';
 import { compile } from 'path-to-regexp';
 import { useRef, useMemo } from 'react';
@@ -59,8 +59,8 @@ type RouterContextMockProps = {
 	children?: ReactNode;
 	navigate?: (toOrDelta: number | To) => void;
 	currentPath?: MutableRefObject<string | undefined>;
-	searchParameters?: Record<string, any>;
-	routeParameters?: Record<string, any>;
+	searchParameters?: SearchParameters;
+	routeParameters?: RouteParameters;
 };
 
 const RouterContextMock = ({
@@ -85,7 +85,7 @@ const RouterContextMock = ({
 					getLocationSearch: () => '',
 					getRouteParameters: () => routeParameters,
 					getSearchParameters: () => searchParameters,
-					getRouteName: () => 'home',
+					getRouteName: () => 'home' as RouteName,
 					getPreviousRouteName: () => undefined,
 					buildRoutePath,
 					navigate:

@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import AppsList from '../AppsList';
 import FeaturedAppsSections from './FeaturedAppsSections';
 
+type ItemsPerPage = 25 | 50 | 100;
+
 type AppsPageContentBodyProps = {
 	isMarketplace: boolean;
 	isFiltered: boolean;
@@ -17,13 +19,13 @@ type AppsPageContentBodyProps = {
 		allApps: App[];
 		totalAppsLength: number;
 	}>;
-	itemsPerPage: 25 | 50 | 100;
+	itemsPerPage: ItemsPerPage;
 	current: number;
-	onSetItemsPerPage: Dispatch<SetStateAction<25 | 50 | 100>>;
+	onSetItemsPerPage: Dispatch<SetStateAction<ItemsPerPage>>;
 	onSetCurrent: Dispatch<SetStateAction<number>>;
 	paginationProps: {
 		itemsPerPageLabel: () => string;
-		showingResultsLabel: (context: { count: number; current: number; itemsPerPage: 25 | 50 | 100 }) => string;
+		showingResultsLabel: (context: { count: number; current: number; itemsPerPage: ItemsPerPage }) => string;
 	};
 	noErrorsOcurred: boolean;
 };

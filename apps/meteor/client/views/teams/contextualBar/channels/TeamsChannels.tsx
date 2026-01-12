@@ -22,13 +22,15 @@ import { Virtuoso } from 'react-virtuoso';
 import TeamsChannelItem from './TeamsChannelItem';
 import InfiniteListAnchor from '../../../../components/InfiniteListAnchor';
 
+type ChannelFilter = 'all' | 'autoJoin';
+
 type TeamsChannelsProps = {
 	loading: boolean;
 	channels: IRoom[];
 	mainRoom: IRoom;
 	text: string;
-	type: 'all' | 'autoJoin';
-	setType: Dispatch<SetStateAction<'all' | 'autoJoin'>>;
+	type: ChannelFilter;
+	setType: Dispatch<SetStateAction<ChannelFilter>>;
 	setText: (e: ChangeEvent<HTMLInputElement>) => void;
 	onClickClose: () => void;
 	onClickAddExisting: false | ((e: SyntheticEvent) => void);
