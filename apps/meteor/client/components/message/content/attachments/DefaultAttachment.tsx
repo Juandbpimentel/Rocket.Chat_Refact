@@ -1,4 +1,4 @@
-import type { MarkdownFields, MessageAttachmentDefault } from '@rocket.chat/core-typings';
+import type { MarkdownFields, MessageAttachmentDefault, Dimensions } from '@rocket.chat/core-typings';
 import { isActionAttachment } from '@rocket.chat/core-typings';
 import type { ReactNode, ComponentProps, ReactElement } from 'react';
 
@@ -96,7 +96,15 @@ const DefaultAttachment = (attachment: DefaultAttachmentProps): ReactElement => 
 								})}
 							/>
 						)}
-						{attachment.image_url && <AttachmentImage {...(attachment.image_dimensions as any)} src={attachment.image_url} />}
+						{attachment.image_url && (
+							<AttachmentImage
+								{...((attachment.image_dimensions ?? {}) as Dimensions)}
+								src={attachment.image_url}
+								loadImage={false}
+								setLoadImage={() => undefined}
+								id={attachment.title ?? undefined}
+							/>
+						)}
 						{/* DEPRECATED */}
 						{isActionAttachment(attachment) && <ActionAttachment {...attachment} />}
 					</>

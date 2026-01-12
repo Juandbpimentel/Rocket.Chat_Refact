@@ -79,7 +79,7 @@ const getTestCases = (schemes: string[], uris: string[]): { scheme: string; link
 
 const isExternal = (link: string): boolean => link.indexOf(MOCKED_BASE_URI) !== 0;
 
-const normalizeHtml = (html: any) => {
+const normalizeHtml = (html: string): string => {
 	return html.replace(/\s+/g, ' ').trim();
 };
 

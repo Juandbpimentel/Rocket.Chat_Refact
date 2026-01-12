@@ -28,7 +28,7 @@ export const RoomIcon = ({
 		return <OmnichannelRoomIcon placement={placement} source={room.source} status={room.v?.status} size={size} />;
 	}
 
-	if (isValidElement<any>(iconPropsOrReactNode)) {
+	if (isValidElement(iconPropsOrReactNode)) {
 		return iconPropsOrReactNode;
 	}
 
@@ -36,5 +36,7 @@ export const RoomIcon = ({
 		return null;
 	}
 
-	return <Icon {...iconPropsOrReactNode} size={size} />;
+	// iconPropsOrReactNode can be either props for <Icon> or a React element. At this point
+	// we've already handled the React element case above, so this must be props for <Icon>.
+	return <Icon {...(iconPropsOrReactNode as ComponentProps<typeof Icon>)} size={size} />;
 };

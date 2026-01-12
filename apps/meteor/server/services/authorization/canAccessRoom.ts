@@ -51,7 +51,7 @@ const roomAccessValidators: RoomAccessValidator[] = [
 		return canAccessPublicRoom(user);
 	},
 
-	async function _validateIfAlreadyJoined(room, user, extraData): Promise<boolean> {
+	async function _validateIfAlreadyJoined(room, user, _extraData): Promise<boolean> {
 		if (!room?._id || !user?._id) {
 			return false;
 		}
@@ -67,14 +67,12 @@ const roomAccessValidators: RoomAccessValidator[] = [
 			!(await License.hasModule('abac')) ||
 			(!(await Settings.getValueById('ABAC_Enabled')) as boolean)
 		) {
-			const includeInvitations = extraData?.includeInvitations ?? false;
-			if (!(await Subscriptions.countByRoomIdAndUserId(room._id, user._id, includeInvitations))) {
+			if (!(await Subscriptions.countByRoomIdAndUserId(room._id, user._id))) {
 				return false;
 			}
 
 			return canViewJoined || canViewT;
 		}
-
 		return (canViewJoined || canViewT) && Abac.canAccessObject(room, user, AbacAccessOperation.READ, AbacObjectType.ROOM);
 	},
 
