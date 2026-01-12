@@ -2,7 +2,7 @@ import type { IMessage, IThreadMainMessage } from '@rocket.chat/core-typings';
 import { isEditedMessage } from '@rocket.chat/core-typings';
 import { Box, CheckBox, Field, FieldLabel, FieldRow } from '@rocket.chat/fuselage';
 import { clientCallbacks, ContextualbarContent } from '@rocket.chat/ui-client';
-import { useMethod, useTranslation, useUserPreference, useRoomToolbox } from '@rocket.chat/ui-contexts';
+import { useMethod, useTranslation, useUserPreference, useRoomToolbox, type TranslationKey } from '@rocket.chat/ui-contexts';
 import { useState, useEffect, useCallback, useId } from 'react';
 
 import ThreadMessageList from './ThreadMessageList';
@@ -107,7 +107,7 @@ const ThreadChat = ({ mainMessage }: ThreadChatProps) => {
 						<ThreadMessageList mainMessage={mainMessage} />
 					</MessageListErrorBoundary>
 
-					<RoomComposer aria-label={t('Thread_composer')}>
+					<RoomComposer aria-label={t('Thread_composer' as TranslationKey)}>
 						<ComposerContainer
 							tmid={mainMessage._id}
 							subscription={subscription}

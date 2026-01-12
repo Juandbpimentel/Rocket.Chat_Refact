@@ -1,4 +1,5 @@
 import { mockAppRoot, MockedRouterContext } from '@rocket.chat/mock-providers';
+import type { To, RouteName } from '@rocket.chat/ui-contexts';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
@@ -23,12 +24,12 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 
 const mockRoot = () => {
 	const AppRoot = mockAppRoot();
-	const buildWithRouter = (navigate: (...args: any[]) => void) => {
+	const buildWithRouter = (navigate: (route: To | number) => void) => {
 		const Wrapper = AppRoot.build();
 		return function Mock({ children }: { children: ReactNode }) {
 			return (
 				<Wrapper>
-					<MockedRouterContext router={{ navigate, getRouteName: () => 'thread' as any }}>{children}</MockedRouterContext>
+					<MockedRouterContext router={{ navigate, getRouteName: () => 'thread' as unknown as RouteName }}>{children}</MockedRouterContext>
 				</Wrapper>
 			);
 		};
