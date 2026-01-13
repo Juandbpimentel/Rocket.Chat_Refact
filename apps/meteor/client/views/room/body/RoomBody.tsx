@@ -1,6 +1,15 @@
 import { Box } from '@rocket.chat/fuselage';
 import { CustomScrollbars, useEmbeddedLayout } from '@rocket.chat/ui-client';
-import { usePermission, useRole, useSetting, useTranslation, useUser, useUserPreference, useRoomToolbox } from '@rocket.chat/ui-contexts';
+import {
+	usePermission,
+	useRole,
+	useSetting,
+	useTranslation,
+	useUser,
+	useUserPreference,
+	useRoomToolbox,
+	type TranslationKey,
+} from '@rocket.chat/ui-contexts';
 import type { MouseEvent, ReactElement } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 
@@ -274,7 +283,7 @@ const RoomBody = (): ReactElement => {
 									</MessageListErrorBoundary>
 								</div>
 							</div>
-							<RoomComposer aria-label={t('Room_composer')}>
+							<RoomComposer aria-label={t('Room_composer' as TranslationKey)}>
 								<ComposerContainer
 									subscription={subscription}
 									onResize={handleComposerResize}

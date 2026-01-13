@@ -25,6 +25,12 @@ jest.mock('../views/room/hooks/useGoToRoom', () => ({
 const mockUseMessageListHighlights = useMessageListHighlights as jest.MockedFunction<typeof useMessageListHighlights>;
 const wrapper = mockAppRoot().withUserPreference('useEmojis', true).withSetting('UI_Use_Real_Name', false).withJohnDoe();
 
+const makeHighlight = (h: string) => ({
+	highlight: h,
+	regex: new RegExp(h.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&'), 'i'),
+	urlRegex: new RegExp(h.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&'), 'i'),
+});
+
 const HighlightTester = ({ text }: { text: string }) => {
 	return (
 		<Markup
@@ -44,7 +50,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight Russian word "тест" in the middle of a sentence', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'тест' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('тест')]);
 
 		render(
 			<GazzodownText>
@@ -57,7 +63,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight Russian word "тест" at the beginning of a sentence', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'тест' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('тест')]);
 
 		render(
 			<GazzodownText>
@@ -69,7 +75,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should not highlight "тест" when it is part of a larger word', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'тест' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('тест')]);
 
 		render(
 			<GazzodownText>
@@ -81,7 +87,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight Russian word "тест" at the end of a sentence', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'тест' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('тест')]);
 
 		render(
 			<GazzodownText>
@@ -93,7 +99,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight English word "test" regardless of its position', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		render(
 			<GazzodownText>
@@ -105,7 +111,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight all occurrences of the highlighted word in different positions', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		render(
 			<GazzodownText>
@@ -122,7 +128,7 @@ describe('GazzodownText highlights', () => {
 	});
 
 	it('should highlight the highlighted word in a multiline text', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		const multilineText = `First line
 Test line
@@ -145,7 +151,7 @@ in it.`;
 	});
 
 	it('should highlight highlighted word when surrounded by colons', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		render(
 			<GazzodownText>
@@ -158,7 +164,7 @@ in it.`;
 	});
 
 	it('should highlight highlighted word when colon is at the start', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		render(
 			<GazzodownText>
@@ -171,7 +177,7 @@ in it.`;
 	});
 
 	it('should highlight highlighted word when colon is at the end', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test')]);
 
 		render(
 			<GazzodownText>
@@ -184,7 +190,7 @@ in it.`;
 	});
 
 	it('should highlight multiple different highlighted words in the same text', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'test' }, { highlight: 'highlight' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('test'), makeHighlight('highlight')]);
 
 		render(
 			<GazzodownText>
@@ -202,7 +208,7 @@ in it.`;
 
 	it('should highlight a word containing special characters like "-", "_", ".", "/", "=", "!", ":', () => {
 		// The highlight word includes special characters.
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'te-st_te.st/te=te!st:' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('te-st_te.st/te=te!st:')]);
 
 		const testText = 'This message contains te-st_te.st/te=te!st: as a highlighted word.';
 		render(
@@ -216,7 +222,7 @@ in it.`;
 	});
 
 	it('should highlight the word in a case-insensitive manner', () => {
-		mockUseMessageListHighlights.mockReturnValue([{ highlight: 'Test' }] as any);
+		mockUseMessageListHighlights.mockReturnValue([makeHighlight('Test')]);
 
 		render(
 			<GazzodownText>

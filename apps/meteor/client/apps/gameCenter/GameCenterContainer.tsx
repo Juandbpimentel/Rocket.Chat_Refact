@@ -7,14 +7,14 @@ import {
 	ContextualbarClose,
 	ContextualbarDialog,
 } from '@rocket.chat/ui-client';
-import type { ReactElement } from 'react';
+import type { ReactElement, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { IGame } from './GameCenter';
 
 interface IGameCenterContainerProps {
 	handleClose: () => void;
-	handleBack: (e: any) => void;
+	handleBack?: (e: MouseEvent) => void;
 	game: IGame;
 }
 

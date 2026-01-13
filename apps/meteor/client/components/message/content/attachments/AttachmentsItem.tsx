@@ -1,4 +1,4 @@
-import type { MessageAttachmentBase } from '@rocket.chat/core-typings';
+import type { MessageAttachmentBase, MessageAttachmentDefault } from '@rocket.chat/core-typings';
 import { isFileAttachment, isQuoteAttachment } from '@rocket.chat/core-typings';
 import type { ReactElement } from 'react';
 import { memo } from 'react';
@@ -21,7 +21,7 @@ const AttachmentsItem = ({ attachment, id }: AttachmentsItemProps): ReactElement
 		return <QuoteAttachment attachment={attachment} />;
 	}
 
-	return <DefaultAttachment {...(attachment as any)} />;
+	return <DefaultAttachment {...(attachment as MessageAttachmentDefault)} />;
 };
 
 export default memo(AttachmentsItem);

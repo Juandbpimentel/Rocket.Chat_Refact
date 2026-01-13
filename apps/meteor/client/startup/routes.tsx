@@ -26,6 +26,7 @@ const NotFoundPage = lazy(() => import('../views/notFound/NotFoundPage'));
 const CallHistoryPage = lazy(() => import('../views/mediaCallHistory/CallHistoryPage'));
 
 declare module '@rocket.chat/ui-contexts' {
+	type DirectoryTab = 'users' | 'channels' | 'teams' | 'external';
 	interface IRouterPaths {
 		'index': {
 			pathname: '/';
@@ -44,7 +45,7 @@ declare module '@rocket.chat/ui-contexts' {
 			pattern: '/home';
 		};
 		'directory': {
-			pathname: `/directory${`/${'users' | 'channels' | 'teams' | 'external'}` | ''}`;
+			pathname: `/directory${`/${DirectoryTab}` | ''}`;
 			pattern: '/directory/:tab?';
 		};
 		'omnichannel-directory': {

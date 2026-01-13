@@ -42,7 +42,7 @@ Nickname.args = {
 		...user,
 		nickname: 'nicknamenickname',
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const LargeName = Template.bind({});
 LargeName.args = {
@@ -51,7 +51,7 @@ LargeName.args = {
 		customStatus: '🛴 currently working on User Card  on User Card  on User Card  on User Card  on User Card ',
 		name: 'guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.guilherme.gazzo.',
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoRoles = Template.bind({});
 NoRoles.args = {
@@ -59,12 +59,12 @@ NoRoles.args = {
 		...user,
 		roles: undefined,
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoActions = Template.bind({});
 NoActions.args = {
 	actions: undefined,
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoLocalTime = Template.bind({});
 NoLocalTime.args = {
@@ -72,7 +72,7 @@ NoLocalTime.args = {
 		...user,
 		localTime: undefined,
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoBio = Template.bind({});
 NoBio.args = {
@@ -80,7 +80,7 @@ NoBio.args = {
 		...user,
 		bio: undefined,
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoBioAndNoLocalTime = Template.bind({});
 NoBioAndNoLocalTime.args = {
@@ -89,7 +89,7 @@ NoBioAndNoLocalTime.args = {
 		bio: undefined,
 		localTime: undefined,
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const NoBioNoLocalTimeNoRoles = Template.bind({});
 NoBioNoLocalTimeNoRoles.args = {
@@ -99,6 +99,6 @@ NoBioNoLocalTimeNoRoles.args = {
 		localTime: undefined,
 		roles: undefined,
 	},
-} as any;
+} as StoryFn<typeof UserCard>['args'];
 
 export const Loading = () => <UserCard />;
